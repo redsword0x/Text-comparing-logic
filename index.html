@@ -1,0 +1,193 @@
+<!--Thanks for using my code. Feel free to modify anything.
+    Github : redsword0x | Discord : redswordx01
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Text Comparison</title>
+<style>
+body {
+  font-family: 'Roboto Mono', monospace;
+  background-color: #1e1e1e;
+  color: #eee;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+h1 {
+  color: #64daff;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px rgba(100, 218, 255, 0.5);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 10px rgba(100, 218, 255, 0.5);
+  }
+  to {
+    text-shadow: 0 0 20px rgba(100, 218, 255, 0.8);
+  }
+}
+
+textarea {
+  width: 80%;
+  height: 200px;
+  margin: 10px 0;
+  padding: 10px;
+  border: 2px solid #333;
+  background-color: #282828;
+  color: #eee;
+  font-family: 'Roboto Mono', monospace;
+  resize: vertical;
+  overflow: auto;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+textarea:focus {
+  border-color: #64daff;
+  box-shadow: 0 0 10px rgba(100, 218, 255, 0.2);
+}
+
+
+button {
+  padding: 10px 20px;
+  background-color: #64daff;
+  color: #1e1e1e;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+button:hover {
+  background-color: #50b9e5;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+button:active {
+  transform: scale(1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+#result {
+  margin-top: 20px;
+  font-weight: bold;
+  width: 80%;
+  background-color: #282828;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  box-sizing: border-box;
+}
+
+.diff {
+  background-color: #ffc857;
+  color: #1e1e1e;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+#result span {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+
+</style>
+</head>
+<body>
+
+<h1>Text Comparison</h1>
+<h3>This can compare two textbox and finds the unmatch words Ignoring the blank spaces. [ ©Rakib • SourceCode on github : redsword0x ]</h3>
+
+<textarea id="text1" placeholder="Paste first text here (e.g., GitHub code)"></textarea>
+<textarea id="text2" placeholder="Paste second text here (e.g., your code)"></textarea>
+<button onclick="compareText()">Compare</button>
+
+<div id="result"></div>
+
+<script>
+function compareText() {
+  const text1 = document.getElementById("text1").value;
+  const text2 = document.getElementById("text2").value;
+  const resultDiv = document.getElementById("result");
+  resultDiv.innerHTML = ""; // Clear previous results
+
+  const words1 = text1.toLowerCase().split(/\s+/);
+  const words2 = text2.toLowerCase().split(/\s+/);
+
+  const unmatched1 = [];
+  const unmatched2 = [];
+
+  words1.forEach(word => {
+    if (!words2.includes(word)) {
+      unmatched1.push(word);
+    }
+  });
+
+  words2.forEach(word => {
+    if (!words1.includes(word)) {
+      unmatched2.push(word);
+    }
+  });
+
+  let output1 = "";
+  words1.forEach(word => {
+    if (unmatched1.includes(word)) {
+      output1 += `<span class="diff">${word}</span> `;
+    } else {
+      output1 += word + " ";
+    }
+  });
+
+  let output2 = "";
+  words2.forEach(word => {
+    if (unmatched2.includes(word)) {
+      output2 += `<span class="diff">${word}</span> `;
+    } else {
+      output2 += word + " ";
+    }
+  });
+
+
+  if (unmatched1.length === 0 && unmatched2.length === 0) {
+    resultDiv.innerHTML = "Texts are identical (ignoring case and whitespace)."; // Use innerHTML here too!
+    return;
+  }
+
+  resultDiv.innerHTML = `Text 1: ${output1}<br><br>Text 2: ${output2}`; // Template literals and innerHTML
+
+
+  if (unmatched1.length > 0 || unmatched2.length > 0) {
+    resultDiv.innerHTML += "<br><br>Unmatched words (Text 1): " + unmatched1.join(", ") + "<br>";
+    resultDiv.innerHTML += "Unmatched words (Text 2): " + unmatched2.join(", ");
+  }
+}
+</script>
+
+</body>
+</html>

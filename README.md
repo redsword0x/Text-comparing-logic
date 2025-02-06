@@ -1,2 +1,1 @@
-# Text-comparing-logic
-This can compare two textbox and finds the unmatch words ignoring the blank spaces.
+Ive put the html,css and js into the index.html. But you can make different html,css,js file if you want.
